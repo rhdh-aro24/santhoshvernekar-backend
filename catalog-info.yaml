@@ -1,0 +1,66 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: santhoshvernekar-poi-backend-app-dev
+  annotations:
+    argocd/app-name: santhoshvernekar-poi-backend-app-dev
+    backstage.io/kubernetes-id: santhoshvernekar-poi-backend-app
+    backstage.io/kubernetes-namespace: santhoshvernekar
+    backstage.io/techdocs-ref: dir:.
+    github.com/project-slug: rhdh-aro24/santhoshvernekar-backend
+    janus-idp.io/tekton-enabled: 'true'
+  tags:
+    - java
+    - quarkus
+    - maven
+    - workshop
+  links:
+    - url: https://console-openshift-console.apps.kovj5vhc.eastus.aroapp.io/dev-pipelines/ns/santhoshvernekar/
+      title: Pipelines
+      icon: web
+    - url: https://console-openshift-console.apps.kovj5vhc.eastus.aroapp.io/k8s/ns/santhoshvernekar/deployments/santhoshvernekar-poi-backend-app
+      title: Deployment
+      icon: web
+    - url: https://devspaces.apps.kovj5vhc.eastus.aroapp.io/#https://github.com/rhdh-aro24/santhoshvernekar-backend?che-editor=che-incubator/che-code/latest&devfilePath=.devfile-vscode.yaml
+      title: OpenShift Dev Spaces (VS Code)
+      icon: web
+spec:
+  type: service
+  lifecycle: production
+  owner: "user:santhoshvernekar"
+  system: workshop-system-santhoshvernekar
+  providesApis:
+    - backend-api-santhoshvernekar
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: workshop-system-santhoshvernekar
+  tags:
+    - backstage
+    - janus-idp
+    - openshift
+    - workshop
+    - rh-summit
+spec:
+  owner: "user:santhoshvernekar"
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: backend-api-santhoshvernekar
+  description: API surface used by workshop attendees to initialize and load parks data
+  links:
+    - url: https://santhoshvernekar-poi-backend-app-santhoshvernekar.apps.kovj5vhc.eastus.aroapp.io/q/swagger-ui
+      title: Swagger UI
+      icon: web
+    - url: https://github.com/rhdh-aro24/santhoshvernekar-backend/tree/main/src/main/resources/META-INF/openapi.yaml
+      title: API Spec
+      icon: code
+spec:
+  type: openapi
+  lifecycle: production
+  owner: "user:santhoshvernekar"
+  system: workshop-system-santhoshvernekar
+  definition:
+    $text: https://github.com/rhdh-aro24/santhoshvernekar-backend/tree/main/src/main/resources/META-INF/openapi.yaml
